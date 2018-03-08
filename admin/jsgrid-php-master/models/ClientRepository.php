@@ -19,8 +19,8 @@ class ClientRepository {
         $result->author = $row["Author"];
         $result->publisher = $row["Publisher"];
         $result->year = $row["Year"];
-        $result->accessible_from = $row["Accessible from"];
-        $result->accessible_upto = $row["Accessible upto"];
+        $result->accessible_from = $row["Accessible_from"];
+        $result->accessible_upto = $row["Accessible_upto"];
         $result->url = $row["URL"];
         $result->subject = $row["Subject"];
         $result->notes = $row["Notes"];
@@ -71,12 +71,18 @@ class ClientRepository {
 
 
     public function update($data) {
-        $sql = "UPDATE books SET SN =?, ISSN =?, CallNo =?, Title =?, Author =?, Publisher =?, Place =?, Year =?, Accessible from =?, Accessible upto =?, URL =?, Subject =?, Notes =?, AccessionNo =? WHERE sn=?";
+        $sql = "UPDATE books SET ISSN =?, CallNo =?, Title =?, Author =?, Publisher =?, Place =?, Year =?, Accessible_from =?, Accessible_upto =?, URL =?, Subject =?, Notes =?, AccessionNo =? WHERE sn=?";
         $q = $this->db->prepare($sql);
-        $q->bind_param("sssssssssssssss", $data["sn"],$data["issn"], $data["callno"], $data["title"], $data["author"], $data["publisher"],$data["place"],$data["year"],$data["accessible_from"],$data["accessible_upto"],$data["url"],$data["subject"],$data["notes"],$data["accessionNo"],$data["sn"]);
+        $q->bind_param("ssssssssssssss",$data["issn"], $data["callno"], $data["title"], $data["author"], $data["publisher"],$data["place"],$data["year"],$data["accessible_from"],$data["accessible_upto"],$data["url"],$data["subject"],$data["notes"],$data["accessionNo"],$data["sn"]);
         $q->execute();
     }
-
+    public function insert($data) {
+        $sql = "INSERT INTO  books ( ISSN ,  CallNo ,  Title ,  Author ,  Publisher ,  Place ,  Year ,  Accessible_from ,  Accessible_upto ,  URL ,  Subject ,  Notes ,  AccessionNo ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        $q = $this->db->prepare($sql);
+        $q->bind_param("sssssssssssss",$data["issn"], $data["callno"], $data["title"], $data["author"], $data["publisher"],$data["place"],$data["year"],$data["accessible_from"],$data["accessible_upto"],$data["url"],$data["subject"],$data["notes"],$data["accessionNo"]);
+        $q->execute();
+        return $this->getById($this->db->insert_id);
+    }
     public function remove($sn) {
         $sql = "DELETE FROM books WHERE sn = ?";
         $q = $this->db->prepare($sql);
