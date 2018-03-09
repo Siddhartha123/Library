@@ -11,13 +11,20 @@ header("Location:../login");
     <link href="jsgrid-php-master/public/css/style.css" rel="stylesheet" />
     <link href="./jsgrid/dist/jsgrid.min.css" rel="stylesheet" />
     <link href="./jsgrid/dist/jsgrid-theme.min.css" rel="stylesheet" />
-    <title>JSGrid and PHP Sample</title>
+    <title>Library</title>
 </head>
 <body>
 <header>
-    <h1>JSGrid and PHP Sample</h1>
+    <h1>Library</h1>
 </header>
-
+<form action="upload.php" method="post" enctype="multipart/form-data">
+    Select CSV file to import:
+    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="submit" value="Upload File" name="submit">
+</form>
+<div>
+    <a href="./export.php">Click here to export data</a>
+</div>
 <div id="jsGrid"></div>
 
 <script src="../assets/jquery.min.js"></script>
