@@ -19,8 +19,9 @@
       if(empty($v["error"]))
       {
         $_GET['query']='%'.$_GET['query'].'%';
-          $stmt=$con->prepare("SELECT * FROM books WHERE ? LIKE ?") or die(mysqli_error($con));
-          $stmt->bind_param("ss",$_GET['type'],$_GET['query']) or die("Failed to connect to server: " . mysqli_error($con));
+        $query="SELECT * FROM books WHERE ".$_GET['type']." LIKE ?";
+          $stmt=$con->prepare($query) or die(mysqli_error($con));
+          $stmt->bind_param("s",$_GET['query']) or die("Failed to connect to server: " . mysqli_error($con));
           $stmt->execute() or die("Failed to connect to MySQL: " . mysqli_error($con));
           $result=$stmt->get_result() or die("Failed to connect to MySQL: " . mysqli_error($con));
           $search_result=array();
